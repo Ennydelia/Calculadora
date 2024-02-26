@@ -3,14 +3,49 @@ import { TouchableOpacity, View, Text, StyleSheet, SafeAreaView, ScrollView   } 
 
 function DetailScreen() {
     const [Resultado, setResultado] = useState('0');
+    const [operador, setOperador] = useState(null);
+    const [valorAnterior, setValorAnterior] = useState(null);
 
     const handleButtonPress = (value) => {    
-        setResultado((prevResultado) => (prevResultado === '0' ? value : prevResultado + value));
+        // setResultado((prevResultado) => (prevResultado === '0' ? value : prevResultado + value));
+        if (Resultado === '0' || operador) {
+            setResultado(value);
+            setOperador(null);
+          } else {
+            // Concatena el valor del botón presionado
+            setResultado((prevResultado) => prevResultado + value);
+        }
     };
-    
+
     const handleClear = () => {
         setResultado('0');
+        setOperador(null);
+        setValorAnterior(null);
     };
+    
+    const handleOperator = (operator) => {
+        // Si ya hay un operador, realiza la operación pendiente
+        if (operador) {
+          const newResultado = eval(`${valorAnterior} ${operador} ${Resultado}`);
+          setResultado(String(newResultado));
+          setOperador(operator);
+          setValorAnterior(String(newResultado));
+        } else {
+          // Si es la primera operación, guarda el resultado actual como valor anterior
+          setOperador(operator);
+          setValorAnterior(Resultado);
+        }
+    };
+
+    const handleEqual = () => {
+        // Si hay un operador pendiente, realiza la operación
+        if (operador) {
+          const newResultado = eval(`${valorAnterior} ${operador} ${Resultado}`);
+          setResultado(String(newResultado));
+          setOperador(null);
+          setValorAnterior(null);
+        }
+    };    
 
     return (
         <View style={styles.container}>
@@ -30,7 +65,7 @@ function DetailScreen() {
                     <TouchableOpacity style={styles.buttonL1} onPress={() => handleClear()}>
                         <Text style={styles.buttonText}>C</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonL1} onPress={() => handleButtonPress('/')}>
+                    <TouchableOpacity style={styles.buttonL1} onPress={() => handleOperator('/')}>
                         <Text style={styles.buttonText}>/</Text>
                     </TouchableOpacity>                    
                 </View>
@@ -44,7 +79,7 @@ function DetailScreen() {
                     <TouchableOpacity style={styles.buttonL1} onPress={() => handleButtonPress('9')}>
                         <Text style={styles.buttonText}>9</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonL1} onPress={() => handleButtonPress('X')}>
+                    <TouchableOpacity style={styles.buttonL1} onPress={() => handleOperator('*')}>
                         <Text style={styles.buttonText}>X</Text>
                     </TouchableOpacity>
                 </View>
@@ -58,7 +93,7 @@ function DetailScreen() {
                     <TouchableOpacity style={styles.buttonL1} onPress={() => handleButtonPress('6')}>
                         <Text style={styles.buttonText}>6</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonL1} onPress={() => handleButtonPress('-')}>
+                    <TouchableOpacity style={styles.buttonL1} onPress={() => handleOperator('-')}>
                         <Text style={styles.buttonText}>-</Text>
                     </TouchableOpacity>
                 </View>
@@ -72,7 +107,7 @@ function DetailScreen() {
                     <TouchableOpacity style={[styles.buttonL1]} onPress={() => handleButtonPress('3')}>
                         <Text style={styles.buttonText}>3</Text>
                     </TouchableOpacity> 
-                    <TouchableOpacity style={styles.buttonL1} onPress={() => handleButtonPress('+')}>
+                    <TouchableOpacity style={styles.buttonL1} onPress={() => handleOperator('+')}>
                         <Text style={styles.buttonText}>+</Text>
                     </TouchableOpacity> 
                 </View>
@@ -83,7 +118,7 @@ function DetailScreen() {
                     <TouchableOpacity style={styles.buttonL1} onPress={() => handleButtonPress('.')}>
                         <Text style={styles.buttonText}>.</Text>
                     </TouchableOpacity>  
-                    <TouchableOpacity style={styles.buttonL3} onPress={() => handleButtonPress('=')}>
+                    <TouchableOpacity style={styles.buttonL3} onPress={() => handleEqual()}>
                         <Text style={styles.buttonText}>=</Text>
                     </TouchableOpacity>                 
                 </View>
