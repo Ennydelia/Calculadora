@@ -20,7 +20,7 @@ function DetailScreen() {
             </View>
             <View style={styles.espacioEntreVistas}></View>  
             <SafeAreaView  style={styles.Resultado}>
-                <ScrollView style={styles.scrollView}>
+                <ScrollView horizontal style={styles.scrollView}>
                     <Text style={styles.textResultado}>{Resultado}</Text>
                 </ScrollView>
             </SafeAreaView >    
@@ -252,11 +252,11 @@ function DetailScreen() {
             fontWeight: 'bold',
             padding: 5,
             fontSize: 60, 
-            alignItems: 'right',
+            alignItems: 'end',
         },
 
-        scrollView: {           
-            marginHorizontal: 50,
+        scrollView: {          
+            marginHorizontal: 20,
         },
     });
 
