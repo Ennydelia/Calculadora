@@ -2,51 +2,58 @@ import {React, useState} from 'react';
 import { TouchableOpacity, View, Text, StyleSheet, SafeAreaView, ScrollView   } from 'react-native';
 
 function DetailScreen() {
-    const [Resultado, setResultado] = useState('0');
+    const [resultado, setResultado] = useState('0');
     const [operador, setOperador] = useState(null);
     const [valorAnterior, setValorAnterior] = useState(null);
-
-    const handleButtonPress = (value) => {    
-        // setResultado((prevResultado) => (prevResultado === '0' ? value : prevResultado + value));
-        if (Resultado === '0' || operador) {
-            setResultado(value);
-            setOperador(null);
-          } else {
-            // Concatena el valor del botón presionado
-            setResultado((prevResultado) => prevResultado + value);
-        }
+  
+    const handleButtonPress = (value) => {
+        setResultado((prevResultado) => {
+            if (prevResultado === '0' && value !== '.') {
+                return value;
+            } else {
+                return prevResultado + value;
+            }
+        });
     };
 
     const handleClear = () => {
+      setResultado('0');
+      setOperador(null);
+      setValorAnterior(null);
+    };
+  
+    const handleOperator = (operator) => {
+        setOperador(operator);
+        setValorAnterior(resultado);
         setResultado('0');
-        setOperador(null);
-        setValorAnterior(null);
+    };
+
+    const calculate = () => {
+      const prevValue = parseFloat(valorAnterior);
+      const currentValue = parseFloat(resultado);
+      switch (operador) {
+        case '+':
+          return prevValue + currentValue;
+        case '-':
+          return prevValue - currentValue;
+        case '*':
+          return prevValue * currentValue;
+        case '/':
+          return prevValue / currentValue;
+        default:
+          return currentValue;
+      }
+    };
+  
+    const handleEqual = () => {
+        if (operador && valorAnterior !== null && resultado !== null) {
+            const newResultado = calculate();
+            setResultado(String(newResultado));
+            setOperador(null);
+            setValorAnterior(null);
+        }
     };
     
-    const handleOperator = (operator) => {
-        // Si ya hay un operador, realiza la operación pendiente
-        if (operador) {
-          const newResultado = eval(`${valorAnterior} ${operador} ${Resultado}`);
-          setResultado(String(newResultado));
-          setOperador(operator);
-          setValorAnterior(String(newResultado));
-        } else {
-          // Si es la primera operación, guarda el resultado actual como valor anterior
-          setOperador(operator);
-          setValorAnterior(Resultado);
-        }
-    };
-
-    const handleEqual = () => {
-        // Si hay un operador pendiente, realiza la operación
-        if (operador) {
-          const newResultado = eval(`${valorAnterior} ${operador} ${Resultado}`);
-          setResultado(String(newResultado));
-          setOperador(null);
-          setValorAnterior(null);
-        }
-    };    
-
     return (
         <View style={styles.container}>
             <View style={styles.BarraInicio}>
@@ -55,12 +62,12 @@ function DetailScreen() {
             </View>
             <View style={styles.espacioEntreVistas}></View>  
             <SafeAreaView  style={styles.Resultado}>
-                <ScrollView horizontal style={styles.scrollView}>
-                    <Text style={styles.textResultado}>{Resultado}</Text>
+                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                    <Text style={styles.textResultado}>{resultado}</Text>
                 </ScrollView>
             </SafeAreaView >    
             <View style={styles.espacioEntreVistas}></View>       
-            <View style={styles.Botones}>
+            <SafeAreaView style={styles.Botones}>
                 <View style={styles.rowB1}>
                     <TouchableOpacity style={styles.buttonL1} onPress={() => handleClear()}>
                         <Text style={styles.buttonText}>C</Text>
@@ -122,7 +129,7 @@ function DetailScreen() {
                         <Text style={styles.buttonText}>=</Text>
                     </TouchableOpacity>                 
                 </View>
-            </View>
+            </SafeAreaView>
             <View style={styles.BarraFinal}>
                 <View style={styles.line2}></View>
                 <Text style={styles.text3}>Diseñado por: Enedelia Alanis  </Text>
@@ -170,9 +177,8 @@ function DetailScreen() {
         },
         
         Botones: {
-            flex: 3,  
+            flex: 5,  
             backgroundColor: '#E9CEFF',  
-            width: '90%',
             alignItems: 'center',
             justifyContent: 'flex-start',
             borderRadius: 12,
