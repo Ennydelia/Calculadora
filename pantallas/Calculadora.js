@@ -42,7 +42,7 @@ function DetailScreen() {
           return prevValue / currentValue;
         default:
           return currentValue;
-      }
+        }
     };
   
     const handleEqual = () => {
@@ -53,26 +53,20 @@ function DetailScreen() {
             setValorAnterior(null);
         }
     };
-    
+
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View style={styles.BarraInicio}>
-                <View style={styles.BarraInicio2}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Inicio')} style={styles.buttonInicio}>
-                        <Text style={styles.buttonTextIni}>X</Text>
-                    </TouchableOpacity>
-                    <Text style={[styles.text]}> CALCULADORA <Text style={[styles.textMini]}> Basica</Text></Text>                
-                   
-                </View>
+                <Text style={[styles.text]}> CALCULADORA <Text style={[styles.textMini]}> Basica</Text></Text>                
                 <View style={styles.line}></View>
             </View>
             <View style={styles.espacioEntreVistas}></View>  
             <SafeAreaView  style={styles.Resultado}>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollViewContent}>
+                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                     <Text style={styles.textResultado}>{resultado}</Text>
                 </ScrollView>
-            </SafeAreaView >    
-            <View style={styles.espacioEntreVistas}></View>       
+            </SafeAreaView>
+            <View style={styles.espacioEntreVistas}></View>  
             <SafeAreaView style={styles.Botones}>
                 <View style={styles.rowB1}>
                     <TouchableOpacity style={styles.buttonL1} onPress={() => handleClear()}>
@@ -136,191 +130,171 @@ function DetailScreen() {
                     </TouchableOpacity>                 
                 </View>
             </SafeAreaView>
-            <View style={styles.BarraFinal}>
+            <View style={styles.espacioEntreVistas}></View>  
+            <SafeAreaView style={styles.BarraFinal}>
                 <View style={styles.line2}></View>
                 <Text style={styles.text3}>Diseñado por: Enedelia Alanis  </Text>
-            </View>
-        </View>
-      );
-    }
-    
-    const styles = StyleSheet.create({
-        container: {
-            flex: 1,
-            justifyContent: 'space-between',
-            backgroundColor: '#9770BE',
-            alignItems: 'center',
-        },
-        BarraInicio: {
-            width: '100%',
-            flex: 0.6,   
-            alignItems: 'top',
-            justifyContent: 'flex-start',         
-        },
-        BarraInicio2: {
-            flexDirection: 'row',  
-        },
-        text: {
-            color: 'white',
-            fontWeight: 'bold',
-            fontSize: 20, 
-        },
-        textMini: {
-            color: 'white',
-            fontWeight: 'bold',
-            fontSize: 10, 
-        },
-        buttonInicio: {
-            alignItems: 'top',
-            justifyContent: 'center',
-            backgroundColor: '#611F80',
-            borderRadius: 12,
-            padding: 11,
-          },
-          buttonTextIni: {
-            color: 'white',
-            fontSize: 15,
-            fontWeight: 'bold'
-          },
-        line: {
-            width: '100%',
-            borderBottomWidth: 1,
-            borderColor: 'white',
-        },
-        
-        Resultado: {
-            flex: 1,
-            backgroundColor: '#E9CEFF',  
-            width: '90%',
-            alignItems: 'end',
-            justifyContent: 'flex-start',
-            borderRadius: 12,
-        },
-        
-        Botones: {
-            flex: 6,  
-            backgroundColor: '#E9CEFF',  
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            borderRadius: 12,
-        },
+            </SafeAreaView>
+        </SafeAreaView>
+    )
+}
 
-        rowB1: {
-            flexDirection: 'row',
-            marginTop: 35,
-            marginLeft: 180,
-            marginRight: 15,
-        },
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'space-between',
+        backgroundColor: '#9770BE',
+        alignItems: 'center',
+        alignContent: 'center',
+    },
 
-        buttonL1: {
-            width: 70,
-            height: 70,
-            backgroundColor: '#CD8FFE',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginHorizontal: 5,            
-            borderRadius: 8,
-        },
+    // Seccion de Inicio //
+    BarraInicio: {
+        flex: 0.1,   
+        alignSelf: 'stretch',
+        justifyContent: 'flex-start',         
+    },
+    line: {
+        borderBottomWidth: 1,
+        borderColor: 'white',
+    },
+    text: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 20, 
+    },
+    textMini: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 10, 
+    },    
 
-        buttonL2: {
-            width: 150,
-            height: 70,
-            backgroundColor: '#CD8FFE',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginHorizontal: 5,            
-            borderRadius: 8,
-        },
+    // Espacio entre vistas
+    espacioEntreVistas: {
+        height: '8%', 
+    },
+    // Resultado
+    Resultado: {
+        flex: 'auto',
+        backgroundColor: '#E9CEFF',  
+        width: '90%',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end',
+        borderRadius: 12,
+    },
+    textResultado: {
+        color: 'black',
+        fontWeight: 'bold',
+        padding: 5,
+        fontSize: 60, 
+        alignItems: 'end',
+    },
+    scrollView: {          
+        marginHorizontal: 20,
+    },
 
-        buttonL3: {
-            width: 70,
-            height: 70,
-            backgroundColor: '#370349',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginHorizontal: 5,            
-            borderRadius: 8,
-        },
+    // Inicio Botones
+    Botones: {
+        flex: 'auto',  
+        width: '90%',
+        backgroundColor: '#E9CEFF',  
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        borderRadius: 12,
+    },
 
-        rowB2: {
-            flexDirection: 'row',
-            marginTop: 15,
-            marginLeft: 20,
-            marginRight: 15,
-        },
+    // Linea R1
+    rowB1: {
+        flexDirection: 'row',
+        marginTop: 35,
+        marginLeft: 180,
+        marginRight: 15,
+    },
 
-        rowB3: {
-            flexDirection: 'row',
-            marginTop: 15,
-            marginLeft: 20,
-            marginRight: 15,
-        },
+    // Linea R2
+    rowB2: {
+        flexDirection: 'row',
+        marginTop: 15,
+        marginLeft: 20,
+        marginRight: 15,
+    },
 
-        rowB4: {
-            flexDirection: 'row',
-            marginTop: 15,
-            marginLeft: 20,
-            marginRight: 15,
-        },
+    // Linea R3
+    rowB3: {
+        flexDirection: 'row',
+        marginTop: 15,
+        marginLeft: 20,
+        marginRight: 15,
+    },
 
-        rowB5: {
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 15,
-            marginLeft: 20,
-            marginRight: 15,
-        },
-        
-        button: {
-            width: 50,
-            height: 50,
-            backgroundColor: '#CD8FFE',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginHorizontal: 5,            
-            borderRadius: 8,
-        },
-        
-        buttonText: {
-            fontSize: 30,
-            fontWeight: 'bold',
-            color: 'white',
-        },
+    // Linea R4
+    rowB4: {
+        flexDirection: 'row',
+        marginTop: 15,
+        marginLeft: 20,
+        marginRight: 15,
+    },
 
-        BarraFinal: {
-            width: '100%',
-            flex: 1,
-            alignItems: 'end',
-            justifyContent: 'flex-end',
-        },
+    // Linea R5
+    rowB5: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 15,
+        marginLeft: 20,
+        marginRight: 15,
+    },
 
-        text3: {
-            color: 'white',
-            fontWeight: 'bold',
-            fontSize: 15, 
-        },
+    // Botones Generales
+    buttonL1: {
+        width: 70,
+        height: 70,
+        backgroundColor: '#CD8FFE',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal: 5,            
+        borderRadius: 8,
+    },
+    buttonText: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: 'white',
+    },
+    buttonL2: {
+        width: 150,
+        height: 70,
+        backgroundColor: '#CD8FFE',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal: 5,            
+        borderRadius: 8,
+    },
+    buttonL3: {
+        width: 70,
+        height: 70,
+        backgroundColor: '#370349',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal: 5,            
+        borderRadius: 8,
+    },
 
-        line2: {
-            width: '100%',
-            borderBottomWidth: 1,
-            borderColor: 'white',
-        },
-        espacioEntreVistas: {
-            height: 60, 
-        },
+    // Parte del final
+    BarraFinal: {
+        flex: 0.1,   
+        alignSelf: 'stretch',
+        justifyContent: 'flex-end',    
+    },
+    text3: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 15, 
+    },
+    line2: {
+        width: '100%',
+        borderBottomWidth: 1,
+        borderColor: 'white',
+    },
 
-        textResultado: {
-            color: 'black',
-            fontWeight: 'bold',
-            padding: 5,
-            fontSize: 60, 
-            alignItems: 'end',
-        },
-
-        scrollViewContent: {
-            paddingHorizontal: 16,
-        },
-    });
-
-
+});
 export default DetailScreen;
+
