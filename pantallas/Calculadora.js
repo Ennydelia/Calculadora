@@ -57,12 +57,18 @@ function DetailScreen() {
     return (
         <View style={styles.container}>
             <View style={styles.BarraInicio}>
-                <Text style={[styles.text]}> CALCULADORA <Text style={[styles.textMini]}> Basica</Text></Text>                
+                <View style={styles.BarraInicio2}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Inicio')} style={styles.buttonInicio}>
+                        <Text style={styles.buttonTextIni}>X</Text>
+                    </TouchableOpacity>
+                    <Text style={[styles.text]}> CALCULADORA <Text style={[styles.textMini]}> Basica</Text></Text>                
+                   
+                </View>
                 <View style={styles.line}></View>
             </View>
             <View style={styles.espacioEntreVistas}></View>  
             <SafeAreaView  style={styles.Resultado}>
-                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollViewContent}>
                     <Text style={styles.textResultado}>{resultado}</Text>
                 </ScrollView>
             </SafeAreaView >    
@@ -147,9 +153,12 @@ function DetailScreen() {
         },
         BarraInicio: {
             width: '100%',
-            flex: 0.1,   
+            flex: 0.6,   
             alignItems: 'top',
             justifyContent: 'flex-start',         
+        },
+        BarraInicio2: {
+            flexDirection: 'row',  
         },
         text: {
             color: 'white',
@@ -161,6 +170,18 @@ function DetailScreen() {
             fontWeight: 'bold',
             fontSize: 10, 
         },
+        buttonInicio: {
+            alignItems: 'top',
+            justifyContent: 'center',
+            backgroundColor: '#611F80',
+            borderRadius: 12,
+            padding: 11,
+          },
+          buttonTextIni: {
+            color: 'white',
+            fontSize: 15,
+            fontWeight: 'bold'
+          },
         line: {
             width: '100%',
             borderBottomWidth: 1,
@@ -168,7 +189,7 @@ function DetailScreen() {
         },
         
         Resultado: {
-            flex: 0.6,
+            flex: 1,
             backgroundColor: '#E9CEFF',  
             width: '90%',
             alignItems: 'end',
@@ -177,7 +198,7 @@ function DetailScreen() {
         },
         
         Botones: {
-            flex: 5,  
+            flex: 6,  
             backgroundColor: '#E9CEFF',  
             alignItems: 'center',
             justifyContent: 'flex-start',
@@ -296,8 +317,8 @@ function DetailScreen() {
             alignItems: 'end',
         },
 
-        scrollView: {          
-            marginHorizontal: 20,
+        scrollViewContent: {
+            paddingHorizontal: 16,
         },
     });
 
