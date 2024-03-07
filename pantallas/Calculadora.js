@@ -57,7 +57,12 @@ function DetailScreen() {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.BarraInicio}>
-                <Text style={[styles.text]}> CALCULADORA <Text style={[styles.textMini]}> Basica</Text></Text>                
+                <View style={styles.rowB1R}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Inicio')} style={styles.buttonInicio}>
+                        <Text style={styles.buttonTextInicio}>X</Text>
+                    </TouchableOpacity>
+                    <Text style={[styles.text]}> CALCULADORA <Text style={[styles.textMini]}> Basica</Text></Text>   
+                </View>             
                 <View style={styles.line}></View>
             </View>
             <View style={styles.espacioEntreVistas}></View>  
@@ -168,7 +173,21 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 10, 
     },    
-
+    rowB1R: {
+        flexDirection: 'row',
+    },
+    buttonInicio: {
+        alignItems: 'top',
+        justifyContent: 'center',
+        backgroundColor: '#611F80',
+        padding: 13,
+        borderRadius: 12,
+    },
+    buttonTextInicio: {
+        color: 'white',
+        fontSize: 13,
+        fontWeight: 'bold'
+    },
     // Espacio entre vistas
     espacioEntreVistas: {
         height: '8%', 
